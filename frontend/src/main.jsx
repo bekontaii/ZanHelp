@@ -328,32 +328,37 @@ function ServiceDetailPage({ content, route, navigate }) {
     );
   }
 
-  const shouldCenter = item.title !== 'AI заң кеңесшісі';
+  const isAIAdvisor = item.title === 'AI заң кеңесшісі';
 
   return (
-    <PageFrame eyebrow="Қызмет" title={item.title} text={item.description} centered={shouldCenter}>
-      <div className={shouldCenter ? 'service-detail centered-detail' : 'service-detail'}>
-        <div className="service-icon">
-          <Icon size={34} aria-hidden="true" />
-        </div>
-        <div className="detail-list">
-          {details.map((detail) => (
-            <article key={detail}>
-              <Check size={18} aria-hidden="true" />
-              <span>{detail}</span>
-            </article>
-          ))}
-        </div>
-        <div className="hero-actions">
-          <button className="primary-action" type="button" onClick={() => navigate('/subscriptions')}>
-            Жазылымды көру
-            <ArrowRight size={18} aria-hidden="true" />
-          </button>
-          <button className="secondary-action" type="button" onClick={() => navigate('/services')}>
-            Барлық қызметтер
-          </button>
-        </div>
-        {item.title === 'AI заң кеңесшісі' ? <AIChat /> : null}
+    <PageFrame eyebrow="Қызмет" title={item.title} text={item.description} centered>
+      <div className={isAIAdvisor ? 'service-detail centered-detail ai-only-detail' : 'service-detail centered-detail'}>
+        {isAIAdvisor ? (
+          <AIChat />
+        ) : (
+          <>
+            <div className="service-icon">
+              <Icon size={34} aria-hidden="true" />
+            </div>
+            <div className="detail-list">
+              {details.map((detail) => (
+                <article key={detail}>
+                  <Check size={18} aria-hidden="true" />
+                  <span>{detail}</span>
+                </article>
+              ))}
+            </div>
+            <div className="hero-actions">
+              <button className="primary-action" type="button" onClick={() => navigate('/subscriptions')}>
+                Жазылымды көру
+                <ArrowRight size={18} aria-hidden="true" />
+              </button>
+              <button className="secondary-action" type="button" onClick={() => navigate('/services')}>
+                Барлық қызметтер
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </PageFrame>
   );
