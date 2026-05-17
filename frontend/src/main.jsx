@@ -311,6 +311,35 @@ function ServicesPage({ content, navigate }) {
   );
 }
 
+const lawyersList = [
+  {
+    name: 'Жанна Уразбахова',
+    specialties: ['Кылмыстық істер'],
+    photo: '/zhanna-urazbakhova.png',
+  },
+  {
+    name: 'Гаухар Айтжанова',
+    specialties: ['Экономикалық істер'],
+    photo: '/gaukhar-aitzhanova.png',
+  },
+  {
+    name: 'Мейірман Шекеев',
+    specialties: ['Барлық істерді қарайды'],
+    photo: '/meiirman-shekeev.png',
+    allCases: true,
+  },
+  {
+    name: 'Олег Чернов',
+    specialties: ['Азаматтық істер'],
+    photo: '/oleg-chernov.png',
+  },
+  {
+    name: 'Кенжебек Мақсат',
+    specialties: ['Әкімшілік істер', 'Азаматтық істер'],
+    photo: '/kenzhebek-maksat.png',
+  },
+];
+
 function ServiceDetailPage({ content, route, navigate }) {
   const title = unslug(route.replace('/service/', ''));
   const allItems = [...content.features, ...content.tools];
@@ -329,6 +358,7 @@ function ServiceDetailPage({ content, route, navigate }) {
   }
 
   const isAIAdvisor = item.title === 'AI заң кеңесшісі';
+  const isOnlineLawyer = item.title === 'Онлайн заңгер';
 
   return (
     <PageFrame eyebrow="Қызмет" title={item.title} text={item.description} centered>
@@ -360,6 +390,43 @@ function ServiceDetailPage({ content, route, navigate }) {
           </>
         )}
       </div>
+
+      {isOnlineLawyer && (
+        <section className="lawyers-section">
+          <h3 className="lawyers-title">Адвокаттар</h3>
+          <p className="lawyers-subtitle">Кәсіби мамандармен тікелей байланысып, мәселеңізді шешіңіз</p>
+          <div className="lawyers-grid">
+            {lawyersList.map((lawyer) => (
+              <article className="lawyer-card" key={lawyer.name}>
+                <div className="lawyer-image-container">
+                  {lawyer.photo ? (
+                    <img src={lawyer.photo} alt={lawyer.name} className="lawyer-image" />
+                  ) : (
+                    <div className="lawyer-placeholder">
+                      <UserRound size={48} aria-hidden="true" />
+                      <span>{lawyer.name}</span>
+                    </div>
+                  )}
+                </div>
+                <div className="lawyer-info">
+                  <h4 className="lawyer-name">{lawyer.name}</h4>
+                  <div className="lawyer-specs-list">
+                    {lawyer.specialties.map((spec) => (
+                      <span className={`lawyer-spec-badge ${lawyer.allCases ? 'all' : ''}`} key={spec}>
+                        {spec}
+                      </span>
+                    ))}
+                  </div>
+                  <button className="lawyer-action" type="button" onClick={() => navigate('/subscriptions')}>
+                    <Video size={16} aria-hidden="true" />
+                    <span>Кеңес алу</span>
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
     </PageFrame>
   );
 }
