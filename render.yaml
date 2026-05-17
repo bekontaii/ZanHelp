@@ -1,12 +1,7 @@
 services:
   - type: web
-    name: backend
-    env: go
-    buildCommand: go build -o app
-    startCommand: ./app
+    name: zanhelp
+    env: node
+    buildCommand: npm run build
+    startCommand: npm start
 
-  - type: web
-    name: frontend
-    env: static
-    buildCommand: npm install && npm run build
-    staticPublishPath: build
